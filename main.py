@@ -1,5 +1,7 @@
+import animatedSS
+
 def main():
-    pass
+    animatedSS.createSSandAnimate()
 
 
 if __name__ == "__main__":

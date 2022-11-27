@@ -2,14 +2,20 @@ import turtle
 import math
 
 class SolarSystem:
+    EARTH_RADIUS = 6371 # 47.5
+    EARTH_DISTANCE = 1
+    DISTANCE_MULTIPLIER = 100
+
     def __init__(self, width, height):
         self.__theSun = None
         self.__planets = []
         self.__ssTurtle = turtle.Turtle()
         self.__ssTurtle.hideturtle()
         self.__ssScreen = turtle.Screen()
-        self.__ssScreen.setworldcoordinates(-width/2.0, -height/2.0,
-                                             width/2.0, height/2.0)
+        # understand why setworldcoordinates is used
+        # self.__ssScreen.setworldcoordinates(llx=-width/2.0, lly=-height/2.0, urx=width/2.0, ury=height/2.0)
+        self.__ssScreen.setworldcoordinates(llx=-800, lly=-800, urx=800, ury=800)
+                
 
     def addPlanet(self, aPlanet):
         self.__planets.append(aPlanet)
@@ -70,15 +76,15 @@ class Sun:
 
 class Planet:
     def __init__(self, iName, iRad, iM, iDist, iVx, iVy, iC):
-        self.__name = iName
-        self.__radius = iRad
-        self.__mass = iM
-        self.__distance = iDist
+        self.__name = iName         # planētas nosaukums
+        self.__radius = iRad        # planētas rādiuss
+        self.__mass = iM            # planētas masa
+        self.__distance = iDist     # planētas (vidējais) attālums līdz Saulei
         self.__velX = iVx
         self.__velY = iVy 
         self.__moons = []
 
-        self.__x = self.__distance
+        self.__x = self.__distance * SolarSystem.DISTANCE_MULTIPLIER
         self.__y = 0
         self.__color = iC
 
@@ -86,10 +92,11 @@ class Planet:
 
         self.__pTurtle.color(self.__color)
         self.__pTurtle.shape("circle")
+        self.__pTurtle.shape()
 
         self.__pTurtle.up()
         self.__pTurtle.goto(self.__x,self.__y)
-        self.__pTurtle.down()
+        self.__pTurtle.turtlesize(iRad/SolarSystem.EARTH_RADIUS,iRad/SolarSystem.EARTH_RADIUS)
 
 
     #other methods as before
@@ -128,27 +135,34 @@ class Moon(Planet):
 
 
 def createSSandAnimate():
-   ss = SolarSystem(2, 2)
+    turtle.speed("fastest")
+    ss = SolarSystem(2, 2)
 
-   sun = Sun("Sun", 5000, 10, 5800)
-   ss.addSun(sun)
+    sun = Sun("Sun", 5000, 10, 5800)
+    ss.addSun(sun)
 
-   m = Planet("Mercury", 19.5, 1000, .25, 0, 2, "blue")
-   ss.addPlanet(m)
+    m = Planet("Mercury", 2440, 1000, 0.387 * SolarSystem.EARTH_DISTANCE, 0, 2, "blue")
+    ss.addPlanet(m)
+    
+    # m = Planet("Venus")
 
-   m = Planet("Earth", 47.5, 5000, 0.3, 0, 2.0, "green")
-   ss.addPlanet(m)
+    m = Planet("Earth", SolarSystem.EARTH_RADIUS, 5000, SolarSystem.EARTH_DISTANCE, 0, 2.0, "green")
+    ss.addPlanet(m)
+    # add moons
+    
 
-   m = Planet("Mars", 50, 9000, 0.5, 0, 1.63, "red")
-   ss.addPlanet(m)
+    m = Planet("Mars", 3390, 9000, 1.52 * SolarSystem.EARTH_DISTANCE, 0, 1.63, "red")
+    ss.addPlanet(m)
+    # add moons
 
-   m = Planet("Jupiter", 100, 49000, 0.7, 0, 1, "black")
-   ss.addPlanet(m)
 
-   numTimePeriods = 2000
-   for aMove in range(numTimePeriods):
+    m = Planet("Jupiter", 69911, 49000, 5.2 * SolarSystem.EARTH_DISTANCE, 0, 1, "black")
+    ss.addPlanet(m)
+
+    numTimePeriods = 4000
+    for aMove in range(numTimePeriods):
         ss.movePlanets()
 
-   ss.freeze()
+    ss.freeze()
 
 # createSSandAnimate()c\

@@ -1,3 +1,4 @@
+# All code in this modeule is from https://fiftyexamples.readthedocs.io/en/latest/gravity.html
 import math
 from turtle import *
 

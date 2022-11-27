@@ -76,6 +76,7 @@ class Planet:
         self.__distance = iDist
         self.__velX = iVx
         self.__velY = iVy 
+        self.__moons = []
 
         self.__x = self.__distance
         self.__y = 0
@@ -114,7 +115,17 @@ class Planet:
         self.__velX = newVx
 
     def setYVel(self, newVy):
-        self.__velY = newVy 
+        self.__velY = newVy
+    
+    def add_moon(self, aMoon):
+        self.__moons.append(aMoon)
+ 
+    
+class Moon(Planet):
+    pass
+
+
+
 
 def createSSandAnimate():
    ss = SolarSystem(2, 2)
@@ -140,4 +151,4 @@ def createSSandAnimate():
 
    ss.freeze()
 
-createSSandAnimate()
+# createSSandAnimate()c\

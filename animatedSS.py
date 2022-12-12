@@ -7,9 +7,11 @@ class SolarSystem:
         self.__planets = []
         self.__ssTurtle = turtle.Turtle()
         self.__ssTurtle.hideturtle()
+        self.__ssTurtle.speed("fastest")
         self.__ssScreen = turtle.Screen()
         self.__ssScreen.setworldcoordinates(-width/2.0, -height/2.0,
                                              width/2.0, height/2.0)
+        
 
     def addPlanet(self, aPlanet):
         self.__planets.append(aPlanet)
@@ -26,14 +28,19 @@ class SolarSystem:
         dt = .001
 
         for p in self.__planets:
+            # p.move()
+            
             p.moveTo(p.getXPos() + dt * p.getXVel(),
                      p.getYPos() + dt * p.getYVel())
 
+            # calculate the relative x and y against the Sun's x and y
             rX = self.__theSun.getXPos() - p.getXPos()
             rY = self.__theSun.getYPos() - p.getYPos()
           
+            # calculatee the new distance from the Sun
             r = math.sqrt(rX**2 + rY**2)
 
+            # calculate X and Y acceleration
             accX = G * self.__theSun.getMass() * rX/r**3
             accY = G * self.__theSun.getMass() * rY/r**3
 
@@ -45,34 +52,36 @@ class SolarSystem:
         self.__ssScreen.exitonclick() 
 
 class Sun:
-   def __init__(self, iName, iRad, iM, iTemp):
-       self.__name = iName
-       self.__radius = iRad
-       self.__mass = iM
-       self.__temp = iTemp
-       self.__x = 0
-       self.__y = 0
+    def __init__(self, iName, iRad, iM, iTemp):
+        self.__name = iName
+        self.__radius = iRad
+        self.__mass = iM
+        self.__temp = iTemp
+        self.__x = 0
+        self.__y = 0
+    
+        
+        self.__sTurtle = turtle.Turtle()
+        self.__sTurtle.shape("circle")
+        self.__sTurtle.color("yellow")
 
-       self.__sTurtle = turtle.Turtle()
-       self.__sTurtle.shape("circle")
-       self.__sTurtle.color("yellow")
-
-   def getMass(self):
-       return self.__mass
+    def getMass(self):
+        return self.__mass
 
    #other methods as before
 
-   def getXPos(self):
-       return self.__x
+    def getXPos(self):
+        return self.__x
 
-   def getYPos(self):
-       return self.__y
+    def getYPos(self):
+        return self.__y
 
-class Planet:
+class Planet():
     def __init__(self, iName, iRad, iM, iDist, iVx, iVy, iC):
         self.__name = iName
         self.__radius = iRad
         self.__mass = iM
+        self.__moons = []            # a list of moons
         self.__distance = iDist
         self.__velX = iVx
         self.__velY = iVy 
@@ -99,6 +108,19 @@ class Planet:
     def getYPos(self):
         return self.__y
 
+    # add a moon to a planet
+
+
+    
+    # one common function to move a planet
+    def move(self):
+        
+        for m in self.__moons:
+            m.move()
+        return
+    
+    
+
     def moveTo(self, newX, newY):
         self.__x = newX
         self.__y = newY
@@ -115,6 +137,7 @@ class Planet:
 
     def setYVel(self, newVy):
         self.__velY = newVy 
+
 
 def createSSandAnimate():
    ss = SolarSystem(2, 2)

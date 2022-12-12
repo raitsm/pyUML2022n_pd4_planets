@@ -1,10 +1,9 @@
-import animatedSS
+import solar_system_animated as sol
 
 def main():
-    animatedSS.createSSandAnimate()
+    sol.createSSandAnimate()
 
 
 if __name__ == "__main__":
     main()
-7
-#
+    

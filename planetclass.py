@@ -1,9 +1,9 @@
 class Planet:
     def __init__(self, iName, iRad, iM, iDist):
-        self.__name = iName     # planētas nosaukums
-        self.__radius = iRad    # rādiuss  
-        self.__mass = iM        # masa
-        self.__distance = iDist # attālums līdz saulei
+        self.__name = iName
+        self.__radius = iRad
+        self.__mass = iM
+        self.__distance = iDist
 
     def getName(self):
         return self.__name
